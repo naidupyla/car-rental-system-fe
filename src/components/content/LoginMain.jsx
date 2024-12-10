@@ -117,7 +117,7 @@ const LoginMain = () => {
       localStorage.setItem("user_data", JSON.stringify(response.data.user));
 
       if (response.data.user.role === 1) {
-        navigate("/admin/add-car");
+        navigate("/admin/add-car/:id");
       } else {
         navigate(-1);
       }

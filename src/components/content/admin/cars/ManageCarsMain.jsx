@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Table, Button } from "react-bootstrap";
 import { REACT_BASE_URL } from "../../../../config/constant"; // Ensure this path is correct
 import axiosInstance from "../../../../services/base";
+import { useNavigate } from "react-router-dom";
 
 const ManageCarsMain = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Fetch cars data from API
   useEffect(() => {
@@ -33,12 +35,6 @@ const ManageCarsMain = () => {
       console.error("Error deleting car:", error.message);
       alert("Failed to delete car");
     }
-  };
-
-  // Handle Edit action (you can modify this to navigate to an edit page)
-  const handleEdit = (carId) => {
-    alert(`Edit functionality for car ID: ${carId}`);
-    // Redirect to edit page or show an edit form as needed
   };
 
   if (loading) {
@@ -76,7 +72,7 @@ const ManageCarsMain = () => {
                   <Button
                     variant="warning"
                     size="sm"
-                    onClick={() => handleEdit(car._id)}
+                    onClick={() => navigate(`/admin/add-car/${car._id}`)}
                   >
                     Edit
                   </Button>{" "}

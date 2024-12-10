@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import InputField from "../../../Shared/fields/InputField";
 import TextareaField from "../../../Shared/fields/TextareaField";
 import { REACT_BASE_URL } from "../../../../config/constant";
 import axiosInstance from "../../../../services/base";
+import { useNavigate, useParams } from "react-router-dom";
 
 const initial = {
   make: "",
@@ -17,6 +18,42 @@ const AddCar = () => {
   const [formData, setFormData] = useState(initial);
   const [errors, setErrors] = useState(initial);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchPaper = async () => {
+      if (!id || id === ":id") return;
+
+      setLoading(true);
+
+      try {
+        const res = await axiosInstance.get(
+          `${REACT_BASE_URL}/api/cars/${id}`,
+          formData
+        );
+        console.log("res", res.data);
+        setFormData((prev) => ({
+          ...prev,
+          make: res.data.make,
+          model: res.data.model,
+          image: res.data.image,
+          rate: res.data.rate,
+          description: res.data.description,
+        }));
+      } catch (error) {
+        const errorMessage =
+          error?.response?.data?.message ||
+          "An unexpected error occurred. Please try again.";
+        console.log(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPaper();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -81,9 +118,15 @@ const AddCar = () => {
     setLoading(true);
 
     try {
-      await axiosInstance.post(`${REACT_BASE_URL}/api/cars`, formData);
-      setFormData(initial);
-      alert("Car Added successfully");
+      if (id && id !== ":id") {
+        await axiosInstance.put(`${REACT_BASE_URL}/api/cars/${id}`, formData);
+        alert("Car updated successfully");
+        navigate("/admin/manage-cars");
+      } else {
+        await axiosInstance.post(`${REACT_BASE_URL}/api/cars`, formData);
+        setFormData(initial);
+        alert("Car Added successfully");
+      }
     } catch (error) {
       console.error("Error adding car:", error.message);
     } finally {
@@ -93,7 +136,7 @@ const AddCar = () => {
 
   return (
     <div>
-      <h4 className="mb-4">Add New Car</h4>
+      <h4 className="mb-4">{id ? "Edit Car" : "Add New Car"}</h4>
 
       <Form onSubmit={handleSubmit}>
         <InputField
@@ -153,7 +196,7 @@ const AddCar = () => {
         />
 
         <Button variant="primary" type="submit">
-          Add Car
+          {id ? "Save" : "Add New Car"}
         </Button>
       </Form>
     </div>

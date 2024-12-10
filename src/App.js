@@ -54,8 +54,8 @@ const App = () => {
           <Route exact path="/login" element={<Login />} />
         </Route>
         <Route path="/" exact element={<Home />} />
-        <Route exact path="/admin/add-car" element={<AdminRoute />}>
-          <Route exact path="/admin/add-car" element={<AddCar />} />
+        <Route exact path="/admin/add-car/:id" element={<AdminRoute />}>
+          <Route exact path="/admin/add-car/:id" element={<AddCar />} />
         </Route>
         <Route exact path="/admin/manage-cars" element={<AdminRoute />}>
           <Route exact path="/admin/manage-cars" element={<ManageCars />} />

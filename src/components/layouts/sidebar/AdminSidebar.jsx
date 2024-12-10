@@ -13,7 +13,7 @@ const AdminSidebar = () => {
     >
       {user?.role === 1 ? (
         <>
-          <Nav.Link href="/admin/add-car" className="text-dark">
+          <Nav.Link href="/admin/add-car/:id" className="text-dark">
             Add Car
           </Nav.Link>
           <Nav.Link href="/admin/manage-cars" className="text-dark">
