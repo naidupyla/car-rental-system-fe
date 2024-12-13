@@ -24,9 +24,14 @@ const AdminSidebar = () => {
           </Nav.Link>
         </>
       ) : (
-        <Nav.Link href="/customer/add-booking" className="text-dark">
-          Create Bookings
-        </Nav.Link>
+        <>
+          <Nav.Link href="/customer/add-booking/:id" className="text-dark">
+            Create Bookings
+          </Nav.Link>
+          <Nav.Link href="/customer/my-bookings" className="text-dark">
+            View Bookings
+          </Nav.Link>
+        </>
       )}
     </Nav>
   );

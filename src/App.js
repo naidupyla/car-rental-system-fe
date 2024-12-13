@@ -15,6 +15,7 @@ import "./styles/global.css";
 import ManageCars from "./pages/admin/cars/ManageCars";
 import ManageBookings from "./pages/admin/bookings/ManageBookings";
 import { auth_token, isAdmin, isCustomer } from "./auth/auth";
+import ManageMyBookings from "./pages/customer/bookings/ManageMyBookings";
 
 // Create a private route for passengers
 const PassengerRoute = () => {
@@ -83,6 +84,14 @@ const App = () => {
             exact
             path="/customer/add-booking/:id"
             element={<AddBooking />}
+          />
+        </Route>
+
+        <Route exact path="/customer/my-bookings" element={<PassengerRoute />}>
+          <Route
+            exact
+            path="/customer/my-bookings"
+            element={<ManageMyBookings />}
           />
         </Route>
       </Routes>
