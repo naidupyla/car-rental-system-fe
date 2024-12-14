@@ -135,7 +135,7 @@ const LoginMain = () => {
 
   return (
     <div style={{ width: "400px" }}>
-      <h4 className="mb-4">{isLoginPage ? "User Login" : "Sign Up"}</h4>
+      <h4 className="mb-4">{isLoginPage ? "User/Admin Login" : "Sign Up"}</h4>
 
       <Form onSubmit={handleSubmit}>
         {!isLoginPage && (
